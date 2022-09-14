@@ -1,5 +1,14 @@
 """
-My little Queue
+
+Комментарии к коду:
+
+1. Метод enqueue работает некорректно, добавляет элемент в начало очереди
+2. Метод dequeue должен возвращать элемент с начала очереди (первый слева), возвращает с конца - рекомендую обратить внимание на индекс, указанный в методе pop()
+3. Замечательно, что проверили в методе peek возможность ввода некорректного индекса!
+4. Касательно очистки очереди - метод работает корректно, но достаточно будет вызвать метод list.clear(), остальное лишь загромождает код и усложняет для чтения
+5. Рекомендация: для тестирования кода будет удобнее, если добавите в класс метод __str__ и будете выводить содержимое очереди
+
+Ниже приведены изменения кода на основе работы студента
 """
 from typing import Any
 
@@ -18,8 +27,7 @@ class Queue:
         :param elem: элемент, который следует добавить в очередь
         :return: None
         """
-        self.queue.insert(0, elem)
-        return None
+        self.queue.append(elem)
 
     def dequeue(self) -> Any:
         """
@@ -29,7 +37,7 @@ class Queue:
         if len(self.queue) == 0:
             return None
 
-        value = self.queue.pop(len(self.queue)-1)
+        value = self.queue.pop(0)
         return value
 
     def peek(self, ind: int = 0) -> Any:
@@ -38,7 +46,7 @@ class Queue:
         :param ind: индекс элемента с начала очереди
         :return: Просмотренный элемент
         """
-        if ind < 0 or ind > len(self.queue):
+        if ind < 0 or ind >= len(self.queue):
             return None
 
         value = self.queue[ind]
@@ -46,8 +54,8 @@ class Queue:
 
     def clear(self) -> None:
         """ Очистить очередь. """
-        if len(self.queue) == 0:
-            return None
-
         self.queue.clear()
-        return None
+
+    
+    def __str__(self):
+        return f'{self.queue}'
